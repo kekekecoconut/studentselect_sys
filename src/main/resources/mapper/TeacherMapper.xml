@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.TeacherMapper">
+
+    <select id="teacherLogin" resultType="com.keke.domain.Teacher" parameterType="String">
+        select * from teacher where tno = #{tno} and tpassword = #{tpassword}
+    </select>
+
+    <select id="showAllTeacher" resultType="com.keke.domain.Teacher">
+        select * from teacher
+    </select>
+
+    <select id="selecttByTno" resultType="com.keke.domain.Teacher" parameterType="String">
+        select * from teacher where tno = #{tno}
+    </select>
+
+    <select id="selecttByTcoll" resultType="com.keke.domain.Teacher" parameterType="String">
+        select * from teacher where tcoll = #{tcoll}
+    </select>
+
+    <insert id="insertTeacher" parameterType="com.keke.domain.Teacher">
+        insert into teacher(tno,tname,tpassword,tsex,tcoll) values(#{tno},#{tname},#{tpassword},#{tsex},#{tcoll})
+    </insert>
+
+    <delete id="deleteTeacher" parameterType="String">
+        delete from teacher where tno = #{tno}
+    </delete>
+
+    <update id="updateTeacher" parameterType="com.keke.domain.Teacher">
+        update teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="tname!=null">tname=#{tname},</if>
+            <if test="tpassword!=null">tpassword=#{tpassword},</if>
+            <if test="tsex!=null">tsex=#{tsex},</if>
+            <if test="tcoll!=null">tcoll=#{tcoll},</if>
+        </trim>
+        where tno=#{tno}
+    </update>
+
+</mapper>

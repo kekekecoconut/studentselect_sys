@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>发送留言</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <a href="/admin/welcomePage"><span style="color: #f0ffff; ">教师页面</span></a>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span th:text="${name}">
+                    </span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/outUser">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程相关</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/teacher/updateCoursePage">修改课程信息</a></dd>
+                        <dd><a href="/teacher/finalResultPage">中签学生名单</a></dd>
+                        <dd><a href="/teacher/stuGradePage">学生课程成绩</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">留言管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/teacher/recievedMsgPage">查看收到的留言</a></dd>
+                        <dd><a href="/teacher/sendMsgPage">给学生发送留言</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="padding: 20px;background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <h2>
+                            · 发送留言
+                        </h2>
+                    </div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">发送者姓名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="sender" id="sender" required  lay-verify="required" placeholder="请输入发送者学工号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">接收人（学生）姓名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="reciever" id="reciever" required  lay-verify="required" placeholder="请输入接收者学工号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">消息内容</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入内容" name="content" id="content" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">发送</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<script src="/static/layui.js"></script>
+<script src="/static/layui.all.js"></script>
+<script src="/static/jquery-3.5.1.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+          //  layer.alert(JSON.stringify(data.field));
+            $.ajax({
+                url: '/message/sendMessage',
+                type: 'POST',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data.field),
+                success: function (result) {
+                    if (result.code == 200) {
+                        layer.msg("发送成功！", {icon: 6});
+                    } else {
+                        layer.msg("发送失败！", {icon: 5});
+                    }
+                }
+            });
+
+            return false;
+        });
+    });
+
+</script>
+
+</body>

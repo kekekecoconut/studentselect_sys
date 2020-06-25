@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>欢迎来到学生选课系统！</title>
+    <link rel="stylesheet" href="/static/css/layui.css" media="all">
+</head>
+<body class="layui-bg-black">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div style="text-align: center;">
+    <div class="layui-inline">
+        <div class="layui-bg-green">
+            <form class="layui-form" action="" method="post" id="login" onsubmit="return submitHandler()"><br>
+                <br>
+                <br>
+                <br>
+                <h1>学生选课系统</h1>
+                <br>
+                <br>
+                <br>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学工号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" required  lay-verify="required" placeholder="请输入学工号" autocomplete="off" class="layui-input" id="no">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" id="password">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="optionsRadios" value="student" title="学生" checked>
+                        <input type="radio" name="optionsRadios" value="teacher" title="教师">
+                        <br>
+                        <input type="radio" name="optionsRadios" value="admin" title="学院管理员">
+                        <input type="radio" name="optionsRadios" value="highadmin" title="系统管理员">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center;">
+                    <button type="submit" class="layui-btn layui-btn-radius layui-btn-warm" lay-submit="" lay-filter="demo1">登录</button>
+                </div>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/static/layui.js"></script>
+<script src="/static/layui.all.js"></script>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+
+    function submitHandler() {
+
+        var noEle = document.getElementById("no");
+        var passwordEle = document.getElementById("password");
+        var roleRadio = document.getElementsByName("optionsRadios");
+
+        var role = 'student';
+
+        for (var i = 0; i < roleRadio.length; i++) {
+            if (roleRadio[i].checked) {
+                role = roleRadio[i].value;
+            }
+        }
+
+        var action = null;
+        if (role == 'student') {
+            action = "/studentLogin";
+            noEle.name = "sno";
+            passwordEle.name = "spassword";
+        } else if (role == 'teacher') {
+            action = "/teacherLogin";
+            noEle.name = "tno";
+            passwordEle.name = "tpassword";
+        } else if (role == 'admin'){
+            action = "/adminLogin";
+            noEle.name = "ano";
+            passwordEle.name = "apassword";
+        }else{
+            action = "/highadminLogin";
+            noEle.name = "ano";
+            passwordEle.name = "apassword";
+        }
+        document.getElementById("login").action = action;
+
+        return true;
+    }
+</script>
+</body>
+</html>

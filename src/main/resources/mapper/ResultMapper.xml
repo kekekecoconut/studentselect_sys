@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.ResultMapper">
+    <select id="selectPreparedResult" parameterType="String" resultType="com.keke.domain.Result">
+        select pr.* from preparedresult pr,teacher t where t.tno = pr.tno and t.tcoll = #{tcoll}
+    </select>
+
+    <select id="selectFinalResult" parameterType="String" resultType="com.keke.domain.Result">
+        select fr.* from finalresult fr,teacher t where t.tno = fr.tno and t.tcoll = #{tcoll}
+    </select>
+
+    <delete id="deletePreparedResult" parameterType="com.keke.domain.Result">
+        delete from preparedresult where rcno = #{rcno} and rsno = #{rsno} and tno = #{tno}
+    </delete>
+
+    <delete id="deleteFinalResult" parameterType="com.keke.domain.Result">
+        delete from finalresult where rcno = #{rcno} and rsno = #{rsno} and tno = #{tno}
+    </delete>
+
+    <select id="selectCourseNum" resultType="com.keke.domain.ResultSimple" parameterType="String">
+        select ca.cname,count(*) as count from courseall ca, finalresult fr where ca.cno = fr.rcno and ca.ccoll = #{ccoll} group by ca.cno
+    </select>
+
+    <select id="selectAllFinalResult" resultType="com.keke.domain.Result">
+        select * from finalresult
+    </select>
+
+    <select id="selectAllCourseNum" resultType="com.keke.domain.ResultSimple">
+        select ca.cname,count(*) as count from courseall ca, finalresult fr where ca.cno = fr.rcno  group by ca.cno
+    </select>
+
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.GradeMapper">
+
+    <select id="hasSno" parameterType="String" resultType="String">
+        select sno from grade where cno = #{cno}
+    </select>
+
+    <!-- <select id="showAllGrades" resultType="com.keke.domain.Grade">
+         select * from grade
+     </select>
+
+     <select id="showAllCollGrades" parameterType="String" resultType="com.keke.domain.Grade">
+         select * from grade g, student s where g.sno = s.sno and s.sdpt = #{sdept}
+     </select>-->
+
+    <delete id="deleteGrade">
+        delete from grade where cno = #{cno} and sno = #{sno}
+    </delete>
+
+    <insert id="insertGrade">
+        insert into grade(cno,sno,grade,tno) values(#{cno},#{sno},#{grade},#{tno})
+    </insert>
+
+
+
+    <select id="showStuGrades" parameterType="String" resultType="com.keke.domain.GradeDetail">
+        select s.sno,s.sname,ca.cno,ca.cname,g.grade,cd.credits,t.tname from grade g,student s,courseall ca,coursedetail cd,teacher t where t.tno = cd.tno and s.sno = g.sno and ca.cno = cd.cno and ca.cno = g.cno and s.sno = #{sno} and g.tno = t.tno and g.tno = cd.tno
+    </select>
+
+    <select id="showStuGradesColl" parameterType="String" resultType="com.keke.domain.GradeDetail">
+        select s.sno,s.sname,ca.cno,ca.cname,g.grade,cd.credits,t.tname from grade g,student s,courseall ca,coursedetail cd,teacher t where t.tno = cd.tno and s.sno = g.sno and ca.cno = cd.cno and ca.cno = g.cno and s.sdept = #{sdept} and g.tno = t.tno and g.tno = cd.tno
+    </select>
+
+    <select id="showAllStuGrades" resultType="com.keke.domain.GradeDetail">
+        select s.sno,s.sname,ca.cno,ca.cname,g.grade,cd.credits,t.tname from grade g,student s,courseall ca,coursedetail cd,teacher t where t.tno = cd.tno and s.sno = g.sno and ca.cno = cd.cno and ca.cno = g.cno and g.tno = t.tno and g.tno = cd.tno
+    </select>
+
+    <select id="selectGradeBySno" resultType="com.keke.domain.GradeDetail" parameterType="String">
+        select s.sno,s.sname,ca.cno,ca.cname,g.grade,cd.credits,t.tname from grade g,student s,courseall ca,coursedetail cd,teacher t where t.tno = cd.tno and s.sno = g.sno and ca.cno = cd.cno and ca.cno = g.cno and g.sno = #{sno} and g.tno = t.tno and g.tno = cd.tno
+    </select>
+
+    <select id="selectGradeByCname" resultType="com.keke.domain.GradeDetail">
+        select s.sno,s.sname,ca.cno,ca.cname,g.grade,cd.credits,t.tname from grade g,student s,courseall ca,coursedetail cd,teacher t where t.tno = cd.tno and s.sno = g.sno and ca.cno = cd.cno and ca.cno = g.cno and g.sno = #{sno} and g.tno = t.tno and g.tno = cd.tno and ca.cname = #{cname}
+    </select>
+
+    <select id="selectGradeByTno" resultType="com.keke.domain.GradeTeacher">
+        select ca.cname,s.sname,s.sno,g.grade from student s,grade g,courseall ca where s.sno = g.sno and ca.cno = g.cno and g.tno = #{tno}
+    </select>
+
+    <select id="selectGradeByTnoCname" resultType="com.keke.domain.GradeTeacher">
+        select ca.cname,s.sname,s.sno,g.grade from student s,grade g,courseall ca where s.sno = g.sno and ca.cno = g.cno and g.tno = #{tno} and ca.cname = #{cname}
+    </select>
+
+</mapper>

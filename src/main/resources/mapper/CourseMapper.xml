@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CourseMapper">
+
+    <select id="showAllCourses" resultType="com.keke.domain.Course">
+        select cd.cno,ca.cname,t.tno,t.tname,ca.ctype,cd.ctime,cd.place,cd.credits,cd.week,cd.cclass,ca.cpno from coursedetail cd, teacher t, courseall ca where cd.cno = ca.cno and t.tno = cd.tno
+    </select>
+
+    <select id="showCoursesByCname" resultType="com.keke.domain.Course" parameterType="String">
+        select cd.cno,ca.cname,t.tno,t.tname,ca.ctype,cd.ctime,cd.place,cd.credits,cd.week,cd.cclass,ca.cpno from coursedetail cd, teacher t, courseall ca where cd.cno = ca.cno and t.tno = cd.tno and ca.cname = #{cname}
+    </select>
+
+    <select id="hasTimeInPre" parameterType="String" resultType="String">
+        select cd.ctime from coursedetail cd,preparedresult pr,courseall ca where cd.cno = ca.cno and pr.rcno = cd.cno and pr.rcno = ca.cno and pr.rsno = #{rsno}
+    </select>
+
+    <select id="hasTimeInFin" parameterType="String" resultType="String">
+        select cd.ctime from coursedetail cd,finalresult fr,courseall ca where cd.cno = ca.cno and fr.rcno = cd.cno and fr.rcno = ca.cno and fr.rsno = #{rsno}
+    </select>
+
+    <select id="showStudentCourses" resultType="com.keke.domain.StudentCourse" parameterType="String">
+        select ca.cno,ca.cname,ca.cintro,ca.cpno,cd.tno,t.tname from coursedetail cd,courseall ca,finalresult fr,teacher t where cd.cno = ca.cno and cd.cno = fr.rcno and fr.rcno = ca.cno and cd.tno = fr.tno and fr.rsno = #{sno} and cd.tno = t.tno
+    </select>
+
+    <select id="showTeacherCourses" resultType="com.keke.domain.TeacherCourse" parameterType="String">
+        select ca.cno,ca.cname,ca.cintro,ca.cpno from coursedetail cd,courseall ca where cd.cno = ca.cno and cd.tno = #{tno}
+    </select>
+
+    <update id="updateTeacherCourse">
+        update courseall
+        <trim prefix="set" suffixOverrides=",">
+            <if test="cintro!=null">cintro=#{cintro},</if>
+            cpno=#{cpno}
+        </trim>
+        where cno=#{cno}
+    </update>
+
+</mapper>

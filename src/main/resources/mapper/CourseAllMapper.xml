@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CourseAllMapper">
+
+    <select id="showAllCourses" resultType="com.keke.domain.CourseAll">
+        select * from courseall
+    </select>
+
+    <select id="selectPage"  resultType="com.keke.domain.CourseAll">
+        select * from courseall
+    </select>
+
+    <select id="selectcByCno" resultType="com.keke.domain.CourseAll" parameterType="String">
+        select * from courseall where cno = #{cno}
+    </select>
+
+    <select id="selectcByDept" resultType="com.keke.domain.CourseAll" parameterType="String">
+        select * from courseall where ccoll = #{ccoll}
+    </select>
+
+    <select id="selectByType" resultType="com.keke.domain.CourseAll" parameterType="String">
+        select * from courseall where ctype = #{ctype}
+    </select>
+
+    <insert id="insertCourse" parameterType="com.keke.domain.CourseAll">
+        insert into courseall(cno,cname,ctype,ccoll,cintro,cpno) values(#{cno},#{cname},#{ctype},#{ccoll},#{cintro},#{cpno})
+    </insert>
+
+    <update id="updateCourse" parameterType="com.keke.domain.CourseAll">
+        update courseall
+        <trim prefix="set" suffixOverrides=",">
+            <if test="cname!=null">cname=#{cname},</if>
+            <if test="ctype!=null">ctype=#{ctype},</if>
+            <if test="ccoll!=null">ccoll=#{ccoll},</if>
+            <if test="cintro!=null">cintro=#{cintro},</if>
+            <if test="cpno!=null">cpno=#{cpno},</if>
+        </trim>
+        where cno=#{cno}
+    </update>
+
+    <delete id="deleteCourse" parameterType="java.lang.String">
+        delete from courseall where cno = #{cno}
+    </delete>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CourseDetailMapper">
+    <!--public List<CourseDetail> selectCdByTno(String tno);
+
+    public List<CourseDetail> selectCdByClass(String cclass);
+
+    public void insertCd(CourseDetail courseDetail);
+
+    public void deleteCd(String cno);
+
+    public void updateCd(CourseDetail courseDetail);
+    private String cno;
+    private String tno;
+    private String time;
+    private Integer credits;
+    private String place;
+    private Integer maxnum;
+    private String cclass;
+    private String week;-->
+    <select id="selectCdByTno" parameterType="String" resultType="com.keke.domain.CourseDetail">
+        select * from coursedetail where tno = #{tno}
+    </select>
+
+    <select id="selectCdByClass" resultType="com.keke.domain.CourseDetail" parameterType="String">
+        select * from coursedetail where cclass = #{cclass}
+    </select>
+
+    <select id="selectCdByDept" resultType="com.keke.domain.CourseDetail" parameterType="String">
+        select cd.* from coursedetail cd,courseall ca where cd.cno = ca.cno and ca.ccoll = #{ccoll}
+    </select>
+
+    <select id="getMaxNum" resultType="Integer">
+        select maxnum from coursedetail where cno = #{cno} and tno = #{tno}
+    </select>
+
+    <insert id="insertCd" parameterType="com.keke.domain.CourseDetail">
+        insert into coursedetail(cno,tno,ctime,credits,place,maxnum,cclass,week) values(#{cno},#{tno},#{ctime},#{credits},#{place},#{maxnum},#{cclass},#{week})
+    </insert>
+
+    <delete id="deleteCd" parameterType="String">
+        delete from coursedetail where cno = #{cno}
+    </delete>
+
+    <update id="updateCd" parameterType="com.keke.domain.CourseDetail">
+        update coursedetail
+        <trim prefix="set" suffixOverrides=",">
+            <if test="ctime!=null">ctime=#{ctime},</if>
+            <if test="credits!=null">credits=#{credits},</if>
+            <if test="place!=null">place=#{place},</if>
+            <if test="maxnum!=null">maxnum=#{maxnum},</if>
+            <if test="cclass!=null">cclass=#{cclass},</if>
+            <if test="week!=null">week=#{week},</if>
+        </trim>
+        where cno=#{cno} and tno=#{tno}
+    </update>
+</mapper>

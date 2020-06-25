@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>收信列表</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <a href="/student/welcomePage"><span style="color: #f0ffff; ">学生页面</span></a>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span th:text="${name}">
+                    </span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/student/selfDataPage">基本资料</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/outUser">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">选课相关</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/student/selectablePage">查看所有可选择课程</a></dd>
+                        <dd><a href="/student/finalResultPage">查看选课结果</a></dd>
+                        <dd><a href="/student/preparedResultPage">查看未中签课程</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程相关</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/student/gradePage">成绩查询</a></dd>
+                        <dd><a href="/student/coursePage">查看本学期所选课程信息</a></dd>
+                    </dl>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">留言管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/student/recievedMsgPage">查看收到的留言</a></dd>
+                        <dd><a href="/student/sendMasgPage">给任课教师发送留言</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="padding: 20px;background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <h2>
+                            · 收信列表
+                        </h2>
+                    </div>
+                    <div class="layui-card-body">
+                        <!-- <div class="demoTable">
+                             根据合班标志搜索：
+                             <div class="layui-inline">
+                                 <input class="layui-input" name="cclass" id="re" autocomplete="off">
+                             </div>
+                             <button class="layui-btn" id="permissionSubmit" data-type="reload">搜索</button>
+
+                         </div>-->
+                        <!--<table class="layui-table" lay-data="{url:'/admin/sureCourseDetailList', page:false, id:'idTest'}" lay-filter="demo">-->
+                        <table class="layui-table" lay-data="{url:'/message/listMessage', page:false, id:'idTest'}" lay-filter="demo">
+                            <thead>
+                            <tr>
+                                <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+                                <th lay-data="{field:'sender', width:150, sort: true, fixed: true}">发件老师</th>
+                                <th lay-data="{field:'reciever', width:150}">收件人</th>
+                                <th lay-data="{field:'content', width:300}">内容</th>
+                                <th lay-data="{field:'send_time', width:200}">发送时间</th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<script src="/static/layui.js"></script>
+<script src="/static/layui.all.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['table','form'], function(){
+        var table = layui.table;
+        var userTable = table.render();
+
+    });
+</script>
+
+</body>

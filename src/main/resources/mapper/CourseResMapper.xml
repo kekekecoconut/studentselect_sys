@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.CourseResMapper">
+    <insert id="insertUrl" parameterType="com.keke.domain.CourseRes">
+        insert into courseres (cno,tno,name,fileurl) values (#{cno},#{tno},#{name},#{fileurl})
+    </insert>
+
+    <select id="selectFile" resultType="com.keke.domain.CourseRes">
+        select cno,tno,name,fileurl from courseres where cno = #{cno} and tno = #{tno}
+    </select>
+
+    <select id="selectFileBySno" resultType="com.keke.domain.CourseRes">
+        select from courseres
+    </select>
+
+</mapper>

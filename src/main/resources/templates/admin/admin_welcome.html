@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员欢迎页</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <a href="/admin/welcomePage"><span style="color: #f0ffff; ">管理员管理页面</span></a>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span th:text="${name}">
+                    </span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/outUser">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程相关</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/admin/mainPage">学院开设课程</a></dd>
+                        <dd><a href="/admin/courseDetailPage">本学年开设课堂</a></dd>
+                        <dd><a href="/admin/drawCoursePage">课堂抽签</a></dd>
+                        <dd><a href="/admin/preparedResultPage">待抽签记录</a></dd>
+                        <dd><a href="/admin/finalResultPage">学生中签情况</a></dd>
+                        <dd><a href="/admin/showGradesPage">学生所修过的课程成绩</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/admin/stuManagePage">学生管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/teacherManagePage">教师管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="padding: 20px;background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        现在是北京时间：
+                        <a th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd HH:mm:ss')}">time</a>
+                    </div>
+                    <div class="layui-card-body">
+                        <br>
+                        <br>
+                        <h1><p th:text="'学院管理员：' + ${name}+'，欢迎您！'"/></h1>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="/static/layui.js"></script>
+<script src="/static/layui.all.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+</body>

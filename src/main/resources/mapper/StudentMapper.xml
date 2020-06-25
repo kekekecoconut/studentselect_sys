@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.StudentMapper">
+    <select id="showAllStudents" resultType="com.keke.domain.Student">
+        select * from student
+    </select>
+
+    <select id="studentLogin" resultType="com.keke.domain.Student" parameterType="String">
+        select * from student where sno = #{sno} and spassword = #{spassword}
+    </select>
+
+    <select id="selectsByDept" resultType="com.keke.domain.Student">
+        select * from student where sdept = #{sdept}
+    </select>
+
+    <select id="selectsBySno" resultType="com.keke.domain.Student">
+        select * from student where sno = #{sno}
+    </select>
+
+    <delete id="deleteStudent" parameterType="String">
+        delete from student where sno = #{sno}
+    </delete>
+
+    <insert id="insertStudent" parameterType="com.keke.domain.Student">
+        insert into student(sno,sname,ssex,sdept,spassword,sclass) values(#{sno},#{sname},#{ssex},#{sdept},#{spassword},#{sclass})
+    </insert>
+
+    <update id="updateStudent" parameterType="com.keke.domain.Student">
+        update student
+        <trim prefix="set" suffixOverrides=",">
+            <if test="sname!=null">sname=#{sname},</if>
+            <if test="ssex!=null">ssex=#{ssex},</if>
+            <if test="sdept!=null">sdept=#{sdept},</if>
+            <if test="spassword!=null">spassword=#{spassword},</if>
+            <if test="sclass!=null">sclass=#{sclass},</if>
+        </trim>
+        where sno=#{sno}
+    </update>
+
+
+
+
+</mapper>

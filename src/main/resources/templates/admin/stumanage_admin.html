@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>学生管理</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <a href="/admin/welcomePage"><span style="color: #f0ffff; ">管理员管理页面</span></a>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span th:text="${name}">
+                    </span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/outUser">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程相关</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/admin/mainPage">学院开设课程</a></dd>
+                        <dd><a href="/admin/courseDetailPage">本学年开设课堂</a></dd>
+                        <dd><a href="/admin/drawCoursePage">课堂抽签</a></dd>
+                        <dd><a href="/admin/preparedResultPage">待抽签记录</a></dd>
+                        <dd><a href="/admin/finalResultPage">学生中签情况</a></dd>
+                        <dd><a href="/admin/showGradesPage">学生所修过的课程成绩</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/admin/stuManagePage">学生管理</a></li>
+                <li class="layui-nav-item"><a href="/admin/teacherManagePage">教师管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="padding: 20px;background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <h2>
+                            · 学生列表
+                        </h2>
+                    </div>
+                    <div class="layui-card-body">
+                        <!-- <div class="demoTable">
+                             根据合班标志搜索：
+                             <div class="layui-inline">
+                                 <input class="layui-input" name="cclass" id="re" autocomplete="off">
+                             </div>
+                             <button class="layui-btn" id="permissionSubmit" data-type="reload">搜索</button>
+
+                         </div>-->
+
+                        <div class="demoTable">
+                            <button class="layui-btn layui-btn-primary layui-btn-radius" data-type="addNewStudent">新增一条学生记录</button>
+                            <br>
+                            根据学号搜索：
+                            <div class="layui-inline">
+                                <input class="layui-input" name="sno" id="re" autocomplete="off">
+                            </div>
+                            <button class="layui-btn" id="permissionSubmit" data-type="reload">搜索</button>
+                        </div>
+                        <!--<table class="layui-table" lay-data="{url:'/admin/sureCourseDetailList', page:false, id:'idTest'}" lay-filter="demo">-->
+                        <table class="layui-table" lay-data="{url:'/admin/studentList', page:false, id:'idTest'}" lay-filter="demo">
+                            <thead>
+                            <tr>
+                                <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+                                <th lay-data="{field:'sno', width:150, sort: true, fixed: true}">学号</th>
+                                <th lay-data="{field:'sname', width:150}">学生姓名</th>
+                                <th lay-data="{field:'ssex', width:150}">性别</th>
+                                <th lay-data="{field:'sdept', width:150}">学院</th>
+                                <th lay-data="{field:'spassword', width:160}">密码</th>
+                                <th lay-data="{field:'sclass', width:150, sort: true}">专业班级</th>
+                                <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                        <script type="text/html" id="barDemo">
+
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--编辑表单-->
+
+    <div class="layui-row" id="editUser" style="display:none;">
+        <div class="layui-col-md10">
+            <form class="layui-form layui-from-pane" id="saveUser" style="margin-top:20px">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sno" id="sno" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学生姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sname" id="sname" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="ssex" id="ssex" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学院</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sdept" id="sdept" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="spassword" id="spassword" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">专业班级</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sclass" id="sclass" required lay-verify="required" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="margin-top:40px" id="check">
+                    <div class="layui-input-block">
+                        <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="saveUser">保存</button>
+                        <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="addStudent">新增</button>
+                        <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<script src="/static/layui.js"></script>
+<script src="/static/layui.all.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['table','form'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var userTable = table.render();
+
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+            console.log(obj)
+        });
+
+        form.on('submit(saveUser)', function(data,str){
+            //layer.alert(JSON.stringify(data.field));
+            $.ajax({
+                url: '/admin/updateStudent',
+                type: 'POST',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data.field),
+                success: function (result) {
+                    if (result.code == 200) {
+                        layer.msg("修改成功！", {icon: 6});
+                        setTimeout(function () {
+                            window.parent.location.reload();
+                            layer.closeAll();//关闭所有的弹出层
+                        }, 300);
+                    } else {
+                        layer.msg("操作失败！", {icon: 5});
+                    }
+                }
+            });
+
+            return false;
+
+        });
+
+        form.on('submit(addStudent)', function(data,str){
+            //layer.alert(JSON.stringify(data.field));
+            $.ajax({
+                url: '/admin/addStudent',
+                type: 'POST',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data.field),
+                success: function (result) {
+                    if (result.code == 200) {
+                        layer.msg("添加成功！", {icon: 6});
+                        setTimeout(function () {
+                            window.parent.location.reload();
+                            layer.closeAll();//关闭所有的弹出层
+                        }, 300);
+                    } else {
+                        layer.msg("操作失败！", {icon: 5});
+                    }
+                }
+            });
+
+            return false;
+
+        });
+
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        url: '/admin/deleteStudent',
+                        type: 'POST',
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (result) {
+                            if (result.code == 200) {
+                                setTimeout(function () {
+                                    userTable.reload();
+                                }, 300);
+                            }
+                        }
+                    });
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                var data = obj.data;
+                $("#sno").val(data.sno);
+                $("#sname").val(data.sname);
+                $("#ssex").val(data.ssex);
+                $("#sdept").val(data.sdept);
+                $("#spassword").val(data.spassword);
+                $("#sclass").val(data.sclass);
+                layer.open({
+                    type: 1,
+                    offset: '100px',
+                    title: "修改学生详细信息",
+                    area: ['500px', '400px'],
+                    content: $("#editUser")
+                });
+
+                //var str = JSON.stringify(data);
+                //layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            }
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var re = $('#re');
+
+                if(re.val()!=""){
+                    // layer.alert(re.val());
+                    table.reload('idTest', {
+                        url: '/admin/listStudentByno'
+                        ,where: {
+                            sno: re.val()
+                        }
+                    });
+                }else{
+                    table.reload('idTest', {
+                        url: '/admin/studentList'
+                        ,where: {
+
+                        }
+                    });
+                }
+
+            }
+            ,addNewStudent: function(){ //新增一个课堂
+                $("#sno").val("");
+                $("#sname").val("");
+                $("#ssex").val("");
+                $("#sdept").val("");
+                $("#spassword").val("");
+                $("#sclass").val("");
+                layer.open({
+                    type: 1,
+                    offset: '100px',
+                    title: "添加学生详细信息",
+                    area: ['500px', '400px'],
+                    content: $("#editUser")
+                });
+            }
+
+        };
+
+        $('#permissionSubmit').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        $('.layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+
+</body>

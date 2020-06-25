@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keke.mapper.SelectCourseMapper">
+    <select id="selectPrepared" resultType="com.keke.domain.Result">
+        select * from preparedresult where rcno = #{rcno} and tno = #{tno}
+    </select>
+
+    <select id="selectFinal" resultType="com.keke.domain.Result">
+        select * from finalresult where rcno = #{rcno} and tno = #{tno}
+    </select>
+
+    <select id="selectFinalStu" parameterType="String" resultType="com.keke.domain.ResultDetail">
+        select fr.rsno,cd.cno,ca.cname,t.tno,t.tname,cd.ctime from finalresult fr,courseall ca,coursedetail cd,teacher t where fr.rcno = ca.cno and t.tno = fr.tno and fr.rcno = cd.cno and cd.tno = fr.tno and fr.rsno = #{rsno}
+    </select>
+
+    <select id="finalStuList" resultType="com.keke.domain.FinalList">
+        select s.sno,s.sname from finalresult fr,student s where s.sno = fr.rsno and fr.rcno = #{cno} and fr.tno = #{tno}
+    </select>
+
+    <select id="stuListFinal" resultType="com.keke.domain.ResultDetail">
+        select fr.rsno,cd.cno,ca.cname,t.tno,t.tname,cd.ctime from finalresult fr,courseall ca,coursedetail cd,teacher t where fr.rcno = ca.cno and t.tno = fr.tno and fr.rcno = cd.cno and cd.tno = fr.tno and fr.tno = #{tno} and fr.rcno = #{cno}
+    </select>
+
+    <select id="selectPreparedStu" parameterType="String" resultType="com.keke.domain.ResultDetail">
+        select pr.rsno,cd.cno,ca.cname,t.tno,t.tname,cd.ctime from preparedresult pr,courseall ca,coursedetail cd,teacher t where pr.rcno = ca.cno and t.tno = pr.tno and pr.rcno = cd.cno and cd.tno = pr.tno and pr.rsno = #{rsno}
+    </select>
+
+    <insert id="insertFinalResult" parameterType="com.keke.domain.Result">
+        insert into finalresult(rcno,rsno,tno) values (#{rcno},#{rsno},#{tno})
+    </insert>
+
+    <insert id="insertPreparedResult" parameterType="com.keke.domain.Result">
+        insert into preparedresult(rcno,rsno,tno) values (#{rcno},#{rsno},#{tno})
+    </insert>
+
+    <delete id="deleteFinalResult" parameterType="com.keke.domain.Result">
+        delete from finalresult where rcno = #{rcno} and rsno = #{rsno} and tno = #{tno}
+    </delete>
+
+    <delete id="deletePreparedResult" parameterType="com.keke.domain.Result">
+        delete from preparedresult where rcno = #{rcno} and rsno = #{rsno} and tno = #{tno}
+    </delete>
+</mapper>
