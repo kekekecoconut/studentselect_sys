@@ -1,6 +1,7 @@
 package com.keke.service;
 
 import com.keke.domain.Message;
+import com.keke.domain.MessageA;
 import com.keke.domain.MessageDetail;
 import com.keke.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class MessageService {
         messageMapper.sendMessage(message);
     }
 
-    public List<MessageDetail> showMessageFromTeacher(String reciever){
+    public List<MessageA> showMessageFromTeacher(String reciever){
         return messageMapper.showMessageFromTeacher(reciever);
     }
 }

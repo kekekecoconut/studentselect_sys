@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan(basePackages ="com.keke.mapper")
 public class StudentselectSysApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(StudentselectSysApplication.class, args);
     }

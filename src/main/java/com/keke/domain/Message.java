@@ -6,6 +6,7 @@ public class Message implements Serializable {
     private String sender;
     private String reciever;
     private String content;
+    private Integer rn;
 
     @Override
     public String toString() {
@@ -13,7 +14,16 @@ public class Message implements Serializable {
                 "sender='" + sender + '\'' +
                 ", reciever='" + reciever + '\'' +
                 ", content='" + content + '\'' +
+                ", rn=" + rn +
                 '}';
+    }
+
+    public Integer getRn(int i) {
+        return rn;
+    }
+
+    public void setRn(Integer rn) {
+        this.rn = rn;
     }
 
     public String getSender() {

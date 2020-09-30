@@ -1,6 +1,7 @@
 package com.keke.mapper;
 
 import com.keke.domain.Message;
+import com.keke.domain.MessageA;
 import com.keke.domain.MessageDetail;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ public interface MessageMapper {
 
     public void sendMessage(Message message);
 
-    public List<MessageDetail> showMessageFromTeacher(String reciever);
+    public List<MessageA> showMessageFromTeacher(String reciever);
 
 
 }

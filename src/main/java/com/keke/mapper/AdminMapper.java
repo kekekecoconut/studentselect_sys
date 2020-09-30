@@ -10,4 +10,8 @@ public interface AdminMapper {
     public Admin adminLogin(String ano, String apassword);
 
     public Highadmin highadminLogin(String ano,String apassword);
+
+
+
+
 }

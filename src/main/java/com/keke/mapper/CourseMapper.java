@@ -17,6 +17,7 @@ public interface CourseMapper {
 
     public List<String> hasTimeInFin(String rsno);
 
+
     //学生界面中所有可选择课程
     public List<Course> showAllCourses();
 
